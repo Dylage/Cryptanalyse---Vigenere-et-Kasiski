@@ -48,10 +48,10 @@ public class Vigenere {
     
 
     /**
-     * Méthode pour chiffrer un texte clair avec un clef selon la méthode de Vigenere
-     * @param clearText : texte à chiffrer
+     * Méthode pour chiffrer un texte clair avec une clef selon la méthode de Vigenere
+     * @param clearText : texte à chiffrer, sans espace
      * @param key : texte utilisé comme clef
-     * @return : le texte chiffré
+     * @return String : le texte chiffré
      */
     public static String encrypt(String clearText, String key){
         String encryptedText = "";
@@ -74,6 +74,37 @@ public class Vigenere {
         }
 
         return encryptedText;
+        
+    }
+
+    /**
+     * Méthode pour déchiffrer un texte chiffré avec une clef selon la méthode de Vigenere
+     * @param encryptedText : texte à déchiffrer, sans espace
+     * @param key : texte utilisé comme clef
+     * @return String : le texte dechiffré
+     */
+    public static String decrypt(String encryptedText, String key){
+        String clearText = "";
+
+        // On ne travaille qu'avec les majuscules
+        encryptedText = encryptedText.toUpperCase();
+        key = key.toUpperCase();
+
+        // Pour utiliser les for plus bas
+        char[] letters =  encryptedText.toCharArray();
+        char[] lettersKey = key.toCharArray();
+        
+        int i = 0;
+        for (char c : letters) {
+            // Pour chaque lettre, on récupère la lettre correspondant à celle-ci,
+            // dont on soustrait son décalage selon la clef
+            // Pour la clef, on utilise le modulo afin de revenir au début à chaque fois
+            // Cette fois-ci, on ajoute 26 pour éviter les nombres négatifs
+            clearText += alphabet.get((char) ((c - lettersKey[i % lettersKey.length]) + 26) % 26);
+            i++;
+        }
+
+        return clearText;
         
     }
     
