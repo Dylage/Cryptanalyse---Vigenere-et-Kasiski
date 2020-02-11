@@ -39,15 +39,7 @@ public class Vigenere {
         map.put(25, 'Z');
 
         alphabet = Collections.unmodifiableMap(map);
-    }
-
-    // Notes à moi-même
-    // Travailler avec entiers plutot que lettres ?
-    // Liste avec clef ?
-    // Uniquement majuscules
-
-    // TODO : supprimer tous les char non alphabétique
-    
+    }    
 
     /**
      * Méthode pour chiffrer un texte clair avec une clef selon la méthode de Vigenere
