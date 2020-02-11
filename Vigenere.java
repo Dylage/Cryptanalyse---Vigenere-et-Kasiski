@@ -45,6 +45,8 @@ public class Vigenere {
     // Travailler avec entiers plutot que lettres ?
     // Liste avec clef ?
     // Uniquement majuscules
+
+    // TODO : supprimer tous les char non alphabétique
     
 
     /**
