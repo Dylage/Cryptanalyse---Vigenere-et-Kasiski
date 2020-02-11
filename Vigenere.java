@@ -71,8 +71,17 @@ public class Vigenere {
             // Pour chaque lettre, on récupère la lettre correspondant à celle-ci,
             // additionnée à son décalage selon la clef
             // Pour la clef, on utilise le modulo afin de revenir au début à chaque fois
-            encryptedText += alphabet.get((char) (c + lettersKey[i % lettersKey.length]) % 26);
-            i++;
+
+            if (alphabet.containsValue(c)) {
+                if (!alphabet.containsValue(lettersKey[i % lettersKey.length])) {
+                    i++;
+                }
+                if (alphabet.containsValue(c) && alphabet.containsValue(lettersKey[i % lettersKey.length])) {
+                    encryptedText += alphabet.get((char) (c + lettersKey[i % lettersKey.length]) % 26);
+                }
+                i++;
+            }
+            
         }
 
         return encryptedText;
@@ -102,8 +111,17 @@ public class Vigenere {
             // dont on soustrait son décalage selon la clef
             // Pour la clef, on utilise le modulo afin de revenir au début à chaque fois
             // Cette fois-ci, on ajoute 26 pour éviter les nombres négatifs
-            clearText += alphabet.get((char) ((c - lettersKey[i % lettersKey.length]) + 26) % 26);
-            i++;
+
+
+            if (alphabet.containsValue(c)) {
+                if (!alphabet.containsValue(lettersKey[i % lettersKey.length])) {
+                    i++;
+                }
+                if (alphabet.containsValue(c) && alphabet.containsValue(lettersKey[i % lettersKey.length])) {
+                    clearText += alphabet.get((char) ((c - lettersKey[i % lettersKey.length]) + 26) % 26);
+                }
+                i++;
+            }
         }
 
         return clearText;

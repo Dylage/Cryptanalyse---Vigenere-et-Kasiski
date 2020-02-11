@@ -49,7 +49,7 @@ public class CryptanalyseDeVigenere {
 
        
 
-
+        System.out.println("\n\nÀ votre service\nAu revoir...");
         sc.close();
 
     }
