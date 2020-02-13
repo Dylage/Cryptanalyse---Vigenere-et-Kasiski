@@ -1,3 +1,5 @@
+package fr.unilim.iut.cryptanalyse;
+
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -39,15 +41,17 @@ public class Vigenere {
         map.put(25, 'Z');
 
         alphabet = Collections.unmodifiableMap(map);
-    }    
+    }
 
     /**
-     * Méthode pour chiffrer un texte clair avec une clef selon la méthode de Vigenere
+     * Méthode pour chiffrer un texte clair avec une clef selon la méthode de
+     * Vigenere
+     * 
      * @param clearText : texte à chiffrer, sans espace
-     * @param key : texte utilisé comme clef
+     * @param key       : texte utilisé comme clef
      * @return String : le texte chiffré
      */
-    public static String encrypt(String clearText, String key){
+    public static String encrypt(String clearText, String key) {
         String encryptedText = "";
 
         // On ne travaille qu'avec les majuscules
@@ -55,9 +59,9 @@ public class Vigenere {
         key = key.toUpperCase();
 
         // Pour utiliser les for plus bas
-        char[] letters =  clearText.toCharArray();
+        char[] letters = clearText.toCharArray();
         char[] lettersKey = key.toCharArray();
-        
+
         int i = 0;
         for (char c : letters) {
             // Pour chaque lettre, on récupère la lettre correspondant à celle-ci,
@@ -73,20 +77,22 @@ public class Vigenere {
                 }
                 i++;
             }
-            
+
         }
 
         return encryptedText;
-        
+
     }
 
     /**
-     * Méthode pour déchiffrer un texte chiffré avec une clef selon la méthode de Vigenere
+     * Méthode pour déchiffrer un texte chiffré avec une clef selon la méthode de
+     * Vigenere
+     * 
      * @param encryptedText : texte à déchiffrer, sans espace
-     * @param key : texte utilisé comme clef
+     * @param key           : texte utilisé comme clef
      * @return String : le texte dechiffré
      */
-    public static String decrypt(String encryptedText, String key){
+    public static String decrypt(String encryptedText, String key) {
         String clearText = "";
 
         // On ne travaille qu'avec les majuscules
@@ -94,16 +100,15 @@ public class Vigenere {
         key = key.toUpperCase();
 
         // Pour utiliser les for plus bas
-        char[] letters =  encryptedText.toCharArray();
+        char[] letters = encryptedText.toCharArray();
         char[] lettersKey = key.toCharArray();
-        
+
         int i = 0;
         for (char c : letters) {
             // Pour chaque lettre, on récupère la lettre correspondant à celle-ci,
             // dont on soustrait son décalage selon la clef
             // Pour la clef, on utilise le modulo afin de revenir au début à chaque fois
             // Cette fois-ci, on ajoute 26 pour éviter les nombres négatifs
-
 
             if (alphabet.containsValue(c)) {
                 if (!alphabet.containsValue(lettersKey[i % lettersKey.length])) {
@@ -117,7 +122,7 @@ public class Vigenere {
         }
 
         return clearText;
-        
+
     }
-    
+
 }
