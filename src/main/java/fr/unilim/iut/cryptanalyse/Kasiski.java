@@ -1,5 +1,6 @@
 package fr.unilim.iut.cryptanalyse;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -11,29 +12,34 @@ public class Kasiski {
         encryptedText.indexOf(encryptedText.substring(0, 2), 0);
 
         // TODO : remplacer par une hashmap (séquence, liste) pour avoir leurs positionS
-        HashMap<String, Integer> hm = new HashMap<>();
+        HashMap<String, ArrayList> hm = new HashMap<>();
         int i = 0;
         int j = 2;
-        int occurrences;
         int fromIndex;
         String sequence;
 
         // TODO : boucler différentes analyses entre (0, 2)
         while (j < encryptedText.length()) {
             sequence = encryptedText.substring(i, j);
-            occurrences = 0;
             fromIndex = 0;
+            hm.put(sequence, new ArrayList<Integer>());
 
             while ((fromIndex = encryptedText.indexOf(sequence, fromIndex)) != -1) {
 
                 System.out.println("Found at index: " + fromIndex);
                 System.out.println("Searching : " + sequence);
 
-                occurrences++;
+                hm.get(sequence).add(fromIndex);
+
                 fromIndex++;
 
             }
-            hm.put(sequence, occurrences);
+
+            // On ne s'embête pas avec ceux qui sont seuls
+            if (hm.get(sequence).size() == 1) {
+                hm.remove(sequence);
+            }
+
             i += 2;
             j += 2;
         }
