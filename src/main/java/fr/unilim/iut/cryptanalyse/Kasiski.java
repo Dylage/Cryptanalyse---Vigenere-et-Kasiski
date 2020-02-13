@@ -13,35 +13,37 @@ public class Kasiski {
 
         // TODO : remplacer par une hashmap (séquence, liste) pour avoir leurs positionS
         HashMap<String, ArrayList> hm = new HashMap<>();
-        int i = 0;
-        int j = 2;
+        int j = encryptedText.length() - 1;
         int fromIndex;
         String sequence;
 
-        // TODO : boucler différentes analyses entre (0, 2)
-        while (j < encryptedText.length()) {
-            sequence = encryptedText.substring(i, j);
-            fromIndex = 0;
-            hm.put(sequence, new ArrayList<Integer>());
+        while (j > 0) {
+            int i = 0;
 
-            while ((fromIndex = encryptedText.indexOf(sequence, fromIndex)) != -1) {
+            while (i + j < encryptedText.length()) {
+                sequence = encryptedText.substring(i, i + j);
+                fromIndex = 0;
+                hm.put(sequence, new ArrayList<Integer>());
 
-                System.out.println("Found at index: " + fromIndex);
-                System.out.println("Searching : " + sequence);
+                while ((fromIndex = encryptedText.indexOf(sequence, fromIndex)) != -1) {
 
-                hm.get(sequence).add(fromIndex);
+                    System.out.println("Found at index: " + fromIndex);
+                    System.out.println("Searching : " + sequence);
 
-                fromIndex++;
+                    hm.get(sequence).add(fromIndex);
 
+                    fromIndex++;
+
+                }
+
+                // On ne s'embête pas avec ceux qui sont seuls
+                if (hm.get(sequence).size() == 1) {
+                    hm.remove(sequence);
+                }
+
+                i += 1;
             }
-
-            // On ne s'embête pas avec ceux qui sont seuls
-            if (hm.get(sequence).size() == 1) {
-                hm.remove(sequence);
-            }
-
-            i += 2;
-            j += 2;
+            j -= 1;
         }
 
         System.out.println(encryptedText);
