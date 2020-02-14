@@ -2,6 +2,7 @@ package fr.unilim.iut.cryptanalyse;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 
 /**
  * Kasiski
@@ -24,9 +25,6 @@ public class Kasiski {
 
                 while ((fromIndex = encryptedText.indexOf(sequence, fromIndex)) != -1) {
 
-                    System.out.println("Found at index: " + fromIndex);
-                    System.out.println("Searching : " + sequence);
-
                     listRepetitions.get(sequence).add(fromIndex);
 
                     fromIndex++;
@@ -48,6 +46,8 @@ public class Kasiski {
 
     public static int estimateKeySize(String encryptedText) {
 
+        int size = 0;
+
         // On récupère la liste des répétitions de caractères
         HashMap<String, ArrayList> listRepetitions = findRepetitions(encryptedText);
 
@@ -59,22 +59,23 @@ public class Kasiski {
             }
         }
 
+        HashSet<Integer> hs = new HashSet<>();
+
         for (String str : listRepetitions.keySet()) {
-            if (str.length() == length) {
+            // if (str.length() == length) {
                 ArrayList<Integer> list = new ArrayList<>();
                 for (Object position : listRepetitions.get(str)) {
                     list.add((int) position);
-                    System.out.println(position);
                 }
-                System.out.println("PPCM : " + findGCD(list.toArray()));
-            }
+                size = findGCD(list.toArray());
+                hs.add(size);
+            // }
         }
+
         
 
-        System.out.println(encryptedText);
-        System.out.println(listRepetitions.toString());
 
-        return 0;
+        return size;
 
     }
 
