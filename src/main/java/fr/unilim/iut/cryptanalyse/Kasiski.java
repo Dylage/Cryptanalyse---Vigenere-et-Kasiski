@@ -3,6 +3,7 @@ package fr.unilim.iut.cryptanalyse;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.PriorityQueue;
 
 /**
  * Kasiski
@@ -60,6 +61,7 @@ public class Kasiski {
         }
 
         HashSet<Integer> hs = new HashSet<>();
+        PriorityQueue<Integer> pq = new PriorityQueue<>();
 
         for (String str : listRepetitions.keySet()) {
             // if (str.length() == length) {
@@ -69,7 +71,16 @@ public class Kasiski {
                 }
                 size = findGCD(list.toArray());
                 hs.add(size);
+                if (!pq.contains(size)) {
+                    pq.add(size);
+                }
             // }
+            
+        }
+        System.out.println(pq);
+        int originalSize = pq.size();
+        for (int i = 0; i < originalSize; i++) {
+            System.out.println(pq.poll());
         }
 
         
