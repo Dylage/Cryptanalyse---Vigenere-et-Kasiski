@@ -47,8 +47,9 @@ public class CryptanalyseDeVigenere {
                 System.out.println("Texte déchiffré : " + Vigenere.decrypt(crypted, key));
                 break;
             case 3:
-                System.out.println(Vigenere.encrypt("abctexteclair", "cle"));
-                Kasiski.estimateKeySize(Vigenere.encrypt("abctexteclair", "cle"));
+                System.out.println("Veuillez entrer le texte à analyser :");
+                crypted = sc.next();
+                System.out.println("Keysize : " + Kasiski.estimateKeySize(crypted));
 
                 break;
         
