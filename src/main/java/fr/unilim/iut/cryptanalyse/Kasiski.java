@@ -1,8 +1,8 @@
 package fr.unilim.iut.cryptanalyse;
 
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.PriorityQueue;
 
 /**
@@ -60,33 +60,48 @@ public class Kasiski {
             }
         }
 
-        HashSet<Integer> hs = new HashSet<>();
         PriorityQueue<Integer> pq = new PriorityQueue<>();
 
+        // On trie selon la taille de la chaine répétée
         for (String str : listRepetitions.keySet()) {
-            // if (str.length() == length) {
+            // On ne garde que les répétitions de String de plus de deux caractères
+            if (str.length() > 2) {
                 ArrayList<Integer> list = new ArrayList<>();
                 for (Object position : listRepetitions.get(str)) {
                     list.add((int) position);
                 }
-                size = findGCD(list.toArray());
-                hs.add(size);
-                if (!pq.contains(size)) {
-                    pq.add(size);
-                }
-            // }
+                size = smallerDistance(list.toArray());
+                pq.add(size);
+            }
             
         }
-        System.out.println(pq);
         int originalSize = pq.size();
+        ArrayDeque<Integer> ad = new ArrayDeque();
+        // On met tout dans un ArrayDeque de manière triée, sans les doublons
         for (int i = 0; i < originalSize; i++) {
-            System.out.println(pq.poll());
+            if (!ad.contains(pq.element())){
+                ad.addLast(pq.poll());
+            }else{
+                pq.poll();
+            }
+        }
+        
+        int pgcd = 0;
+        int i = 0;
+        // Enfin, on fait les PGCD tant que différents de 1 pour avoir la taille probable de la clef
+        while (i < ad.size() - 1) {
+            if (pgcd == 0) {
+                pgcd = gcd((int) ad.toArray()[i], (int) ad.toArray()[i+ 1]);
+            }
+            if (pgcd == 1) {
+                pgcd = gcd((int) ad.toArray()[i], (int) ad.toArray()[i + 2]);
+            }else{
+                pgcd = gcd(pgcd, (int) ad.toArray()[i + 1]);
+            }
+            i += 1;
         }
 
-        
-
-
-        return size;
+        return pgcd;
 
     }
 
@@ -102,24 +117,15 @@ public class Kasiski {
             return b; 
         return gcd(b % a, a); 
     } 
-    
-    /**
-     * Méthode pour obtenir le PGCD d'une liste d'objets
-     * @param arr : doivent être typecastable en entier
-     * @return : PGCD(0, 1, ..., n)
-     */
-    private static int findGCD(Object arr[]) 
-    { 
-        int result = (int) arr[0]; 
-        for (int i = 1; i < arr.length; i++) 
-        { 
-            result = gcd((int) arr[i], result); 
-    
-            if(result == 1) 
-            { 
-                return 1; 
-            } 
-        } 
-        return result; 
-    } 
+
+    private static int smallerDistance(Object arr[]){
+        int n = Integer.MAX_VALUE;
+        for (int i = 0; i < arr.length - 1; i++) {
+            if ((int) arr[i + 1] - (int) arr[i] < n) {
+                n = (int) arr[i + 1] - (int) arr[i];
+            }
+        }
+
+        return n;
+    }
 }

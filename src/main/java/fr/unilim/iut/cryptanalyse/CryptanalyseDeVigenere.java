@@ -49,7 +49,7 @@ public class CryptanalyseDeVigenere {
             case 3:
                 System.out.println("Veuillez entrer le texte à analyser :");
                 crypted = sc.next();
-                System.out.println("Keysize : " + Kasiski.estimateKeySize(crypted));
+                System.out.println("Taille probable de la clef : " + Kasiski.estimateKeySize(crypted));
 
                 break;
         
