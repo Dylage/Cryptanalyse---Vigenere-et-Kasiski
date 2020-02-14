@@ -45,7 +45,7 @@ public class Kasiski {
         return listRepetitions;
     }
 
-    public static int estimateKeySize(String encryptedText) {
+    public static int[] estimateKeySize(String encryptedText) {
 
         int size = 0;
 
@@ -86,6 +86,22 @@ public class Kasiski {
             }
         }
         
+        int pgcd = findLogicalGCD(ad);
+        // TODO : faire en extract method de ce qu'il y a au dessus puis 
+        int pgcd2 = pgcd;
+        while (pgcd2 >= pgcd) {
+            ad.removeFirst();
+            pgcd2 = findLogicalGCD(ad);
+        }
+
+        int[] result = {pgcd, pgcd2};
+
+
+        return result;
+
+    }
+
+    private static int findLogicalGCD(ArrayDeque<Integer> ad) {
         int pgcd = 0;
         int i = 0;
         // Enfin, on fait les PGCD tant que différents de 1 pour avoir la taille probable de la clef
@@ -100,9 +116,7 @@ public class Kasiski {
             }
             i += 1;
         }
-
         return pgcd;
-
     }
 
     /**
